@@ -1,0 +1,2 @@
+1. Use google-web-components to display the html5 video player.
+2. Use a different athentication mechanism than the API key, it is insecure and anyone can use the key to fill my quota. 
