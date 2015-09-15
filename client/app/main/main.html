@@ -1,38 +1,45 @@
-	<h1>Juke<strong>Tube</strong></h1>
-	<form id="search" data-ng-submit="search()">
-		<input id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
-	</form>
-	<nav>
-		<a id="play">{{ youtube.state }}</a>
-		<a id="pause">Pause</a>
-	</nav>
-<div id="results">
-	<div class="video" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
-		<img class="video-image" data-ng-src="{{ video.thumbnail }}">
-		<p class="video-title">{{ video.title }}</p>
-		<p class="video-author">{{ video.author }}</p>
-		<p class="video-description">{{ video.description }}</p>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="col-md-6 video" id="results" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
+				<img class="video-image" data-ng-src="{{ video.thumbnail }}">
+				<p class="video-title">{{ video.title }} 12</p>
+				<p class="video-author">{{ video.author }}</p>
+				<p class="video-description">{{ video.description }}</p>
+			</div>			
+		</div>
+		<div class="col-md-6" id="player">
+			<div class="row">
+				<iframe class="col-md-6" id="placeholder" style="width:80%;height:80%" type="text/html"
+  src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com"
+  frameborder="0"></iframe>
+			</div>
+			<div class="row">
+				<div class="col-md-6" id="playlist">
+					<p id="current">{{ youtube.videoTitle }}</p>
+				</div>
+				<div id="playlist">
+					<p id="current">{{ youtube.videoTitle }}</p>
+					<ol class="list-group"  data-ng-show="playlist">
+						<li class="list-group-item" data-ng-repeat="video in upcoming">
+							<p class="item-delete" data-ng-click="delete('upcoming', video.id)">delete</p>
+							<p class="item-title" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
+						</li>
+					</ol>
+					<ol id="history" data-ng-hide="playlist">
+						<li data-ng-repeat="video in history">
+							<p class="item-delete" data-ng-click="delete('history', video.id)">delete</p>
+							<p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
+						</li>
+					</ol>
+					<p id="tabs">
+						<a ng-class="{on:playlist}" data-ng-click="tabulate(true)">Upcoming</a>
+						<a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
+					</p>					
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-<div id="player">
-	<div id="placeholder"></div>
-</div>
-<div id="playlist">
-	<p id="current">{{ youtube.videoTitle }}</p>
-	<ol id="upcoming" data-ng-show="playlist">
-		<li data-ng-repeat="video in upcoming">
-			<p class="item-delete" data-ng-click="delete('upcoming', video.id)">delete</p>
-			<p class="item-title" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
-		</li>
-	</ol>
-	<ol id="history" data-ng-hide="playlist">
-		<li data-ng-repeat="video in history">
-			<p class="item-delete" data-ng-click="delete('history', video.id)">delete</p>
-			<p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
-		</li>
-	</ol>
-	<p id="tabs">
-		<a ng-class="{on:playlist}" data-ng-click="tabulate(true)">Upcoming</a>
-		<a ng-class="{on:!playlist}" data-ng-click="tabulate(false)">History</a>
-	</p>
-</div>
+
+

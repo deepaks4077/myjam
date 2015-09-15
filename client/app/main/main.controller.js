@@ -3,8 +3,6 @@
 angular.module('myjamApp')
     .controller('MainCtrl', function ($scope, $http, $window, $sce, $log, VideosService) {
 
-    	init();
-
     	function init() {
     		$scope.youtube = VideosService.getYoutube();
     		$scope.results = VideosService.getResults();
@@ -12,6 +10,8 @@ angular.module('myjamApp')
     		$scope.history = VideosService.getHistory();
     		$scope.playlist = true;
     	}
+
+    	init();
 
     	$scope.launch = function (id, title) {
     		VideosService.launchPlayer(id, title);
@@ -64,8 +64,7 @@ angular.module('myjamApp')
     		playerId: null,
     		videoId: null,
     		videoTitle: null,
-    		playerHeight: '480',
-    		playerWidth: '640',
+    		
     		state: 'stopped'
     	};
 

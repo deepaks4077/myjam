@@ -7,8 +7,7 @@ angular.module('myjamApp', [
   'ngResource',
   'ngSanitize',
   'btford.socket-io',
-  'ui.router',
-  'youtube-embed'
+  'ui.router'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
@@ -47,6 +46,11 @@ angular.module('myjamApp', [
 
   .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and you're not logged in
+    var tag = document.createElement('script');
+    tag.src = "http://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
     $rootScope.$on('$stateChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {

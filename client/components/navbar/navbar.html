@@ -17,6 +17,13 @@
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
       </ul>
 
+      <form class="navbar-form navbar-left" id="search" data-ng-submit="search()">
+        <div class="form-group">
+          <input class="form-control" id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
+        </div>
+        <button type="submit" alt="Search" class="btn btn-default">Submit</button>
+      </form>
+
       <ul class="nav navbar-nav navbar-right">
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign up</a></li>
         <li ng-hide="isLoggedIn()" ng-class="{active: isActive('/login')}"><a href="/login">Login</a></li>
