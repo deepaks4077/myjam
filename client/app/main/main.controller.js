@@ -2,57 +2,16 @@
 
 angular.module('myjamApp')
     .controller('MainCtrl', function ($scope, $http, $window, $sce, $log, VideosService) {
+        function init() {
+          $scope.youtube = VideosService.getYoutube();
+          $scope.results = VideosService.getResults();
+          $scope.upcoming = VideosService.getUpcoming();
+          $scope.history = VideosService.getHistory();
+          $scope.playlist = true;
+        }
 
-    	function init() {
-    		$scope.youtube = VideosService.getYoutube();
-    		$scope.results = VideosService.getResults();
-    		$scope.upcoming = VideosService.getUpcoming();
-    		$scope.history = VideosService.getHistory();
-    		$scope.playlist = true;
-    	}
-
-    	init();
-
-    	$scope.launch = function (id, title) {
-    		VideosService.launchPlayer(id, title);
-    		VideosService.archiveVideo(id, title);
-    		VideosService.deleteVideo($scope.upcoming, id);
-    		$log.info('Launched id:' + id + ' and title:' + title);
-    	};
-
-    	$scope.queue = function (id, title) {
-    		VideosService.queueVideo(id, title);
-    		VideosService.deleteVideo($scope.history, id);
-    		$log.info('Queued id:' + id + ' and title:' + title);
-    	};
-
-    	$scope.delete = function (list, id) {
-    		VideosService.deleteVideo(list, id);
-    	};
-
-    	$scope.search = function (searchValue) {
-    		$http.get('https://www.googleapis.com/youtube/v3/search', {
-    			params: {
-    				key: 'AIzaSyAdLbwPetb6jwTyHDuh1QeVwAYD3cv_7ak',
-    				type: 'video',
-    				maxResults: '8',
-    				part: 'id,snippet',
-    				fields: 'items/id,items/snippet/title,items/snippet/description,items/snippet/thumbnails/default,items/snippet/channelTitle',
-    				q: searchValue
-    			}
-    		})
-    		.success( function (data) {
-    			VideosService.listResults(data);
-    			$log.info(data);
-    		})
-    		.error( function () {
-    			$log.info('Search error');
-    		});
-    	}
-
-    	$scope.tabulate = function (state) {
-    		$scope.playlist = state;
-    	}
+        init();
+    	
     })
     .service('VideosService', ['$window', '$rootScope', '$log', function ($window, $rootScope, $log){
 
