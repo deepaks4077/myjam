@@ -32,5 +32,9 @@ angular.module('myjamApp')
   $scope.tabulate = function (state) {
       $scope.playlist = state;
   }
+ 
+  $scope.loadMore = function () {
+    VideosService.getMore();
+  }
   
 });

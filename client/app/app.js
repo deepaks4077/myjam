@@ -7,7 +7,8 @@ angular.module('myjamApp', [
   'ngResource',
   'ngSanitize',
   'btford.socket-io',
-  'ui.router'
+  'ui.router',
+  'infinite-scroll'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

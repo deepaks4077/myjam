@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-6" id="result-wrapper">
 			<div id="results">
-				<div class="video" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
+				<div class="video" infinite-scroll = "loadMore()" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
 					<img class="video-image" data-ng-src="{{ video.thumbnail }}">
 					<p class="video-title">{{ video.title }}</p>
 					<p class="video-author">{{ video.author }}</p>

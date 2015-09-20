@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('myjamApp')
-	.service('VideosService', ['$window', '$rootScope', '$log', function ($window, $rootScope, $log){
+	.service('VideosService', ['$http','$window', '$rootScope', '$log', function ($http, $window, $rootScope, $log){
 
     	var service = this;
 
@@ -30,6 +30,9 @@ angular.module('myjamApp')
     	var history = [
 	    	{id: 'XKa7Ywiv734', title: '[OFFICIAL HD] Daft Punk - Give Life Back To Music (feat. Nile Rodgers)'}
     	];
+
+        var nextPageToken;
+        var currentQuery;
 
     	$window.onYouTubeIframeAPIReady = function () {
     		$log.info('Youtube API is ready');
@@ -98,6 +101,7 @@ angular.module('myjamApp')
     	}
 
     	this.listResults = function (data) {
+
     		results.length = 0;
     		for (var i = data.items.length - 1; i >= 0; i--) {
     			results.push({
@@ -110,6 +114,20 @@ angular.module('myjamApp')
     		}
     		return results;
     	}
+
+        this.appendResults = function (data) {
+
+            for (var i = data.items.length - 1; i >= 0; i--) {
+                results.push({
+                    id: data.items[i].id.videoId,
+                    title: data.items[i].snippet.title,
+                    description: data.items[i].snippet.description,
+                    thumbnail: data.items[i].snippet.thumbnails.default.url,
+                    author: data.items[i].snippet.channelTitle
+                });
+            }
+            return results;
+        }
 
     	this.queueVideo = function (id, title) {
     		upcoming.push({
@@ -151,4 +169,48 @@ angular.module('myjamApp')
     	this.getHistory = function () {
     		return history;
     	};
+
+        this.getMore = function () {
+            $log.info("getMore!!");
+            $http.get('https://www.googleapis.com/youtube/v3/search', {
+                params: {
+                    key: 'AIzaSyAdLbwPetb6jwTyHDuh1QeVwAYD3cv_7ak',
+                    type: 'video',
+                    part: 'id,snippet',
+                    pageToken: service.nextPageToken,
+                    fields: 'nextPageToken,items/id,items/snippet/title,items/snippet/description,items/snippet/thumbnails/default,items/snippet/channelTitle',
+                    q: service.currentQuery
+                }
+            })
+            .success( function (data) {
+                service.appendResults(data);
+                service.nextPageToken = data.nextPageToken;
+                $log.info(data);
+            })
+            .error( function () {
+                $log.info('Search error');
+            });            
+        }
+
+        this.search = function (searchValue) {
+            $http.get('https://www.googleapis.com/youtube/v3/search', {
+                params: {
+                    key: 'AIzaSyAdLbwPetb6jwTyHDuh1QeVwAYD3cv_7ak',
+                    type: 'video',
+                    maxResults: '9',
+                    part: 'id,snippet',
+                    //fields: 'nextPageToken,items/id,items/snippet/title,items/snippet/description,items/snippet/thumbnails/default,items/snippet/channelTitle',
+                    q: searchValue
+                }
+            })
+            .success( function (data) {
+                service.listResults(data);
+                service.nextPageToken = data.nextPageToken;
+                service.currentQuery = searchValue;
+                $log.info(data);
+            })
+            .error( function () {
+                $log.info('Search error');
+            });
+        }
     }])
