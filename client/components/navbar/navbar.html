@@ -17,7 +17,7 @@
         <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}"><a href="/admin">Admin</a></li>
       </ul>
 
-      <form class="navbar-form navbar-left" id="search" data-ng-submit="search()">
+      <form class="navbar-form navbar-left" id="search" data-ng-submit="search(query)">
         <div class="form-group">
           <input class="form-control" id="query" name="q" type="text" placeholder="Search for a YouTube video" data-ng-model="query">
         </div>

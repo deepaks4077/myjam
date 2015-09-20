@@ -1,11 +1,12 @@
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-6">
-			<div class="video" id="results" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
-				<img class="video-image" data-ng-src="{{ video.thumbnail }}">
-				<p class="video-title">{{ video.title }} 12</p>
-				<p class="video-author">{{ video.author }}</p>
-				<p class="video-description">{{ video.description }}</p>
+		<div class="col-md-6" id="result-wrapper">
+			<div id="results">
+				<div class="video" data-ng-repeat="video in results" data-ng-click="queue(video.id, video.title)">
+					<img class="video-image" data-ng-src="{{ video.thumbnail }}">
+					<p class="video-title">{{ video.title }}</p>
+					<p class="video-author">{{ video.author }}</p>
+				</div>
 			</div>			
 		</div>
 		<div class="col-md-6" id="player">
@@ -23,8 +24,8 @@
 							<p class="item-title" data-ng-click="launch(video.id, video.title)">{{video.title}}</p>
 						</li>
 					</ol>
-					<ol id="history" data-ng-hide="playlist">
-						<li data-ng-repeat="video in history">
+					<ol id="history" class="list-group" data-ng-hide="playlist">
+						<li class="list-group-item" data-ng-repeat="video in history">
 							<p class="item-delete" data-ng-click="delete('history', video.id)">delete</p>
 							<p class="item-title" data-ng-click="queue(video.id, video.title)">{{video.title}}</p>
 						</li>
