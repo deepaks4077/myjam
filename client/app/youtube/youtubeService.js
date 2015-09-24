@@ -174,7 +174,7 @@ angular.module('myjamApp')
             $log.info("getMore!!");
             $http.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {
-                    key: 'AIzaSyAdLbwPetb6jwTyHDuh1QeVwAYD3cv_7ak',
+                    key: '',
                     type: 'video',
                     part: 'id,snippet',
                     pageToken: service.nextPageToken,
